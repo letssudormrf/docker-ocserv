@@ -1,4 +1,5 @@
 default-select-group = Route
 select-group = All
+select-group = Route
 auto-select-group = false
 config-per-group = /etc/ocserv/config-per-group

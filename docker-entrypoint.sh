@@ -3,15 +3,15 @@
 if [ ! -f /etc/ocserv/certs/server-key.pem ] || [ ! -f /etc/ocserv/certs/server-cert.pem ]; then
 	# Check environment variables
 	if [ -z "$CA_CN" ]; then
-		CA_CN="VPN CA"
+		CA_CN="Web"
 	fi
 
 	if [ -z "$CA_ORG" ]; then
-		CA_ORG="Big Corp"
+		CA_ORG="Web"
 	fi
 
 	if [ -z "$CA_DAYS" ]; then
-		CA_DAYS=9999
+		CA_DAYS=365
 	fi
 
 	if [ -z "$SRV_CN" ]; then
@@ -19,11 +19,11 @@ if [ ! -f /etc/ocserv/certs/server-key.pem ] || [ ! -f /etc/ocserv/certs/server-
 	fi
 
 	if [ -z "$SRV_ORG" ]; then
-		SRV_ORG="MyCompany"
+		SRV_ORG="Web"
 	fi
 
 	if [ -z "$SRV_DAYS" ]; then
-		SRV_DAYS=9999
+		SRV_DAYS=365
 	fi
 
 	# No certification found, generate one
@@ -51,13 +51,6 @@ if [ ! -f /etc/ocserv/certs/server-key.pem ] || [ ! -f /etc/ocserv/certs/server-
 	tls_www_server
 	EOSRV
 	certtool --generate-certificate --load-privkey server-key.pem --load-ca-certificate ca.pem --load-ca-privkey ca-key.pem --template server.tmpl --outfile server-cert.pem
-
-	# Create a test user
-	if [ -z "$NO_TEST_USER" ] && [ ! -f /etc/ocserv/ocpasswd ]; then
-		echo "Create test user 'test' with password 'test'"
-		echo 'test:Route,All:$5$DktJBFKobxCFd7wN$sn.bVw8ytyAaNamO.CvgBvkzDiFR6DaHdUzcif52KK7' > /etc/ocserv/ocpasswd
-	fi
-fi
 
 # Open ipv4 ip forward
 sysctl -w net.ipv4.ip_forward=1

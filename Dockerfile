@@ -34,7 +34,7 @@ RUN buildDeps=" \
 	&& ./configure \
 	&& make \
 	&& make install \
-	&& mkdir -p /etc/ocserv \
+	&& mkdir -p /etc/ocserv/htpasswd \
 	&& cp /usr/src/ocserv/doc/sample.config /etc/ocserv/ocserv.conf \
 	&& cd / \
 	&& rm -fr /usr/src/ocserv \
@@ -52,7 +52,7 @@ RUN buildDeps=" \
 COPY groupinfo.txt /tmp/
 RUN set -x \
         && sed -i 's/udp-port\ =\ 443/#udp-port\ =\ 443/' /etc/ocserv/ocserv.conf \
-	&& sed -i 's/\.\/sample\.passwd/\/etc\/ocserv\/ocpasswd/' /etc/ocserv/ocserv.conf \
+	&& sed -i 's/\.\/sample\.passwd/\/etc\/ocserv\/htpasswd\/ocpasswd/' /etc/ocserv/ocserv.conf \
 	&& sed -i 's/\(max-same-clients = \)2/\110/' /etc/ocserv/ocserv.conf \
 	&& sed -i 's/\.\.\/tests/\/etc\/ocserv/' /etc/ocserv/ocserv.conf \
 	&& sed -i 's/#\(compression.*\)/\1/' /etc/ocserv/ocserv.conf \
