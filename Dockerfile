@@ -51,6 +51,7 @@ RUN buildDeps=" \
 # Setup config
 COPY groupinfo.txt /tmp/
 RUN set -x \
+        && sed -i 's/udp-port\ =\ 443/#udp-port\ =\ 443/' /etc/ocserv/ocserv.conf \
 	&& sed -i 's/\.\/sample\.passwd/\/etc\/ocserv\/ocpasswd/' /etc/ocserv/ocserv.conf \
 	&& sed -i 's/\(max-same-clients = \)2/\110/' /etc/ocserv/ocserv.conf \
 	&& sed -i 's/\.\.\/tests/\/etc\/ocserv/' /etc/ocserv/ocserv.conf \
